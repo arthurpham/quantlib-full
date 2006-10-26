@@ -26,7 +26,7 @@
 namespace QuantLib {
 
 
-     SmileSection::SmileSection(Time timeToExpiry,
+     InterpolatedSmileSection::InterpolatedSmileSection(Time timeToExpiry,
                                 const std::vector<Rate>& strikes,
                                 const std::vector<Rate>& volatilities)
      : timeToExpiry_(timeToExpiry), strikes_(strikes),
@@ -39,41 +39,50 @@ namespace QuantLib {
             );
      }
 
-
-     SmileSection::SmileSection(const std::vector<Real>& sabrParameters,
-                                const Time timeToExpiry)
-     : timeToExpiry_(timeToExpiry) {
-
-             //fictitious data due to SABRInterpolation redundant input needs
-             for (Size i=0; i<2; i++) {
-                 strikes_.push_back(0.05*i+.01);
-                 volatilities_.push_back(.9);
-             }
-
-             Real alpha = sabrParameters[0];
-             Real beta = sabrParameters[1];
-             Real nu = sabrParameters[2];
-             Real rho = sabrParameters[3];
-             Real forwardValue = sabrParameters[4];
-
-             interpolation_ = boost::shared_ptr<Interpolation>(new
-                  SABRInterpolation(strikes_.begin(), strikes_.end(),
-                  volatilities_.begin(),
-                  timeToExpiry, forwardValue,
-                  alpha, beta, nu, rho,
-                  true, true, true, true,
-                  boost::shared_ptr<OptimizationMethod>()));
-      }
-
-    Real SmileSection::variance(Real strike) const {
+    Real InterpolatedSmileSection::variance(Real strike) const {
         const Real v = interpolation_->operator()(strike, true);
         return v*v*timeToExpiry_;
     }
 
-    Volatility SmileSection::volatility(Rate strike) const {
-        const Real v = interpolation_->operator()(strike, true);
-        return v;
+    Real InterpolatedSmileSection::volatility(Real strike) const {
+        return interpolation_->operator()(strike, true);
     }
 
+    SabrSmileSection::SabrSmileSection(const std::vector<Real>& sabrParameters,
+                                       const Time timeToExpiry)
+    : timeToExpiry_(timeToExpiry) {
+
+        alpha_ = sabrParameters[0];
+        beta_ = sabrParameters[1];
+        nu_ = sabrParameters[2];
+        rho_ = sabrParameters[3];
+        forward_ = sabrParameters[4];
+
+        QL_REQUIRE(forward_>0.0, "forward must be positive: "
+                                << io::rate(forward_) << " not allowed");
+        QL_REQUIRE(timeToExpiry_>0.0, "expiry time must be positive: "
+                                   << timeToExpiry_ << " not allowed");
+        QL_REQUIRE(alpha_>0.0, "alpha must be positive: "
+                              << alpha_ << " not allowed");
+        QL_REQUIRE(beta_>=0.0 && beta_<=1.0, "beta must be in [0.0, 1.0]: "
+                                           << beta_ << " not allowed");
+        QL_REQUIRE(nu_>=0.0, "nu must be non negative: "
+                            << nu_ << " not allowed");
+        QL_REQUIRE(rho_*rho_<=1.0, "rho square must be not greater than one: "
+                                 << rho_ << " not allowed");
+
+    }
+
+
+     Real SabrSmileSection::variance(Rate strike) const {
+        Volatility vol = unsafeSabrVolatility(strike, forward_, timeToExpiry_,
+            alpha_, beta_, nu_, rho_);
+        return vol*vol*timeToExpiry_;
+     }
+
+     Real SabrSmileSection::volatility(Rate strike) const {
+        return unsafeSabrVolatility(strike, forward_, timeToExpiry_,
+            alpha_, beta_, nu_, rho_);
+     }
 }
 

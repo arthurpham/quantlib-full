@@ -372,7 +372,7 @@ namespace QuantLib {
                         //method_ = boost::shared_ptr<OptimizationMethod>(
                         //    new Simplex(10, .00000001));
 
-                        method_->setEndCriteria(EndCriteria(20000, 1e-12));
+                        method_->setEndCriteria(EndCriteria(30000, 1e-8));
 
                         Array guess(3);
                         guess[0] = alpha_;  
@@ -408,7 +408,7 @@ namespace QuantLib {
                         //method_ = boost::shared_ptr<OptimizationMethod>(
                         //    new Simplex(10, .00000001));
 
-                        method_->setEndCriteria(EndCriteria(20000, 1e-12));
+                        method_->setEndCriteria(EndCriteria(30000, 1e-8));
 
                         Array guess(4);
                         guess[0] = alpha_;  
@@ -457,8 +457,8 @@ namespace QuantLib {
 
             Real interpolationSquaredNonNormalizedError() const {
                 Real error, totalError = 0.0;
-                I1 i = this->xBegin_;
-                I2 j = this->yBegin_;
+                std::vector<Real>::const_iterator i = this->xBegin_;
+                std::vector<Real>::const_iterator j = this->yBegin_;
                 for (; i != this->xEnd_; ++i, ++j) {
                     error = value(*i) - *j;
                     totalError += error*error;
@@ -474,8 +474,8 @@ namespace QuantLib {
 
             Real interpolationMaxError() const {
                 Real error, maxError = QL_MIN_REAL;
-                I1 i = this->xBegin_;
-                I2 j = this->yBegin_;
+                std::vector<Real>::const_iterator i = this->xBegin_;
+                std::vector<Real>::const_iterator j = this->yBegin_;
                 for (; i != this->xEnd_; ++i, ++j) {                    
                     error = std::fabs(value(*i) - *j);
                     maxError = std::max(maxError, error);

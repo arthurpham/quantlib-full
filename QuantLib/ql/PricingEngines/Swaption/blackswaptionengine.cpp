@@ -20,7 +20,7 @@
 */
 
 #include <ql/PricingEngines/Swaption/blackswaptionengine.hpp>
-#include <ql/PricingEngines/blackFormula.hpp>
+#include <ql/PricingEngines/blackformula.hpp>
 #include <ql/Volatilities/swaptionconstantvol.hpp>
 #include <ql/DayCounters/actual365fixed.hpp>
 #include <ql/Calendars/nullcalendar.hpp>
@@ -76,6 +76,8 @@ namespace QuantLib {
         Real stdDev = std::sqrt(variance);
         Rate forward = arguments_.fairRate;
         Rate strike = arguments_.fixedRate;
-        results_.vega_ = annuity * blackVega(strike, forward, stdDev) * std::sqrt(exercise);
+        results_.vega_ = annuity *
+            blackStdDevDerivative(strike, forward, stdDev) *
+            std::sqrt(exercise);
     }
 }

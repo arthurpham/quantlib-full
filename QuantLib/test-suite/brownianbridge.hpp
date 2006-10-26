@@ -1,7 +1,6 @@
 /* -*- mode: c++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 /*
- Copyright (C) 2006 Ferdinando Ametrano
  Copyright (C) 2006 StatPro Italia srl
 
  This file is part of QuantLib, a free-software/open-source library
@@ -18,29 +17,20 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 */
 
-#ifndef quantlib_test_market_model_hpp
-#define quantlib_test_market_model_hpp
+#ifndef quantlib_test_brownian_bridge_hpp
+#define quantlib_test_brownian_bridge_hpp
 
 #include <boost/test/unit_test.hpp>
 
 /* remember to document new and/or updated tests in the Doxygen
    comment block of the corresponding class */
 
-class MarketModelTest {
+class BrownianBridgeTest {
   public:
-    static void testMultiStepForwardsAndCaplets();
-    static void testOneStepForwardsAndCaplets();
-    static void testMultiStepCoinitialSwaps();
-    static void testMultiStepCoterminalSwaps();
-    static void testMultiStepCoterminalSwaptions();
-    static void testCallableSwap1();
-    static void testCallableSwap2();
-    static void testAbcdVolatilityIntegration();
-    static void testAbcdVolatilityCompare();
-    static void testAbcdVolatilityFit();
-    static void testDriftCalculator();
-    static void testIsInSubset();
+    static void testVariates();
+    static void testPathGeneration();
     static boost::unit_test_framework::test_suite* suite();
 };
+
 
 #endif

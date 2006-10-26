@@ -24,11 +24,11 @@
 #ifndef quantlib_swaption_volatility_cube_by_sabr_h
 #define quantlib_swaption_volatility_cube_by_sabr_h
 
-#include <ql/Volatilities/swaptionvolmatrix.hpp>
-#include <ql/Instruments/vanillaswap.hpp>
-#include <ql/Math/linearinterpolation.hpp>
-#include <ql/Calendars/target.hpp>
 #include <ql/Volatilities/swaptionvolcube.hpp>
+#include <ql/Patterns/lazyobject.hpp>
+#include <ql/Math/matrix.hpp>
+#include <ql/Math/bilinearinterpolation.hpp>
+#include <ql/quote.hpp>
 
 namespace QuantLib {
 
@@ -119,13 +119,13 @@ namespace QuantLib {
         Matrix marketVolCube() const;
         Matrix volCubeAtmCalibrated() const;
 
-        boost::shared_ptr<SmileSection> smileSection(
+        boost::shared_ptr<SmileSectionInterface> smileSection(
                                                  const Date& exerciseDate,
                                                  const Period& length) const;
-        boost::shared_ptr<SmileSection> smileSection(Time start,
+        boost::shared_ptr<SmileSectionInterface> smileSection(Time start,
                                                      Time length) const;
      protected:
-        boost::shared_ptr<SmileSection> smileSection(
+        boost::shared_ptr<SmileSectionInterface> smileSection(
                                     Time start,
                                     Time length,
                                     const Cube& sabrParametersCube) const;
@@ -146,9 +146,9 @@ namespace QuantLib {
         mutable Cube volCubeAtmCalibrated_;
         mutable Cube sparseParameters_;
         mutable Cube denseParameters_;
-        mutable std::vector< std::vector<boost::shared_ptr<SmileSection> > >
+        mutable std::vector< std::vector<boost::shared_ptr<SmileSectionInterface> > >
                                                                 sparseSmiles_;
-        Cube parametersGuess_;
+        mutable Cube parametersGuess_;
         std::vector<bool> isParameterFixed_;
         bool isAtmCalibrated_;
     };

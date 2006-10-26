@@ -4441,6 +4441,9 @@
 				RelativePath=".\ql\MonteCarlo\all.hpp">
 			</File>
 			<File
+				RelativePath=".\ql\MonteCarlo\brownianbridge.cpp">
+			</File>
+			<File
 				RelativePath="ql\MonteCarlo\brownianbridge.hpp">
 			</File>
 			<File
@@ -8653,6 +8656,12 @@
 			</File>
 			<File
 				RelativePath=".\ql\Volatilities\swaptionvolcube.hpp">
+			</File>
+			<File
+				RelativePath=".\ql\Volatilities\swaptionvolcubebylinear.cpp">
+			</File>
+			<File
+				RelativePath=".\ql\Volatilities\swaptionvolcubebylinear.hpp">
 			</File>
 			<File
 				RelativePath=".\ql\Volatilities\swaptionvolcubebysabr.cpp">

@@ -38,7 +38,10 @@ namespace QuantLib {
         MakeCapFloor(CapFloor::Type capFloorType,
                      const Period& capFloorTenor, 
                      const boost::shared_ptr<Xibor>& index,
-                     Rate strike = Null<Rate>());
+                     Rate strike = Null<Rate>(),
+                     const Period& forwardStart = 0*Days,
+                     const boost::shared_ptr<PricingEngine>& engine =
+                         boost::shared_ptr<PricingEngine>());
 
         operator CapFloor() const;
         operator boost::shared_ptr<CapFloor>() const ;
@@ -46,8 +49,6 @@ namespace QuantLib {
         MakeCapFloor& withNominal(Real n);
         MakeCapFloor& withEffectiveDate(const Date& effectiveDate,
                                         bool firstCapletExcluded);
-        MakeCapFloor& withForwardStart(const Period& forwardStartPeriod,
-                                       bool firstCapletExcluded = false);
         MakeCapFloor& withDiscountingTermStructure(
             const Handle<YieldTermStructure>& discountingTermStructure);
 
@@ -63,8 +64,6 @@ namespace QuantLib {
         
       private:
         CapFloor::Type capFloorType_;
-        Period capFloorTenor_;
-        boost::shared_ptr<Xibor> index_;
         Rate strike_;
         bool firstCapletExcluded_;
 

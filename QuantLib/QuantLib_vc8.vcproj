@@ -3881,6 +3881,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ql\MonteCarlo\brownianbridge.cpp"
+				>
+			</File>
+			<File
 				RelativePath="ql\MonteCarlo\brownianbridge.hpp"
 				>
 			</File>
@@ -6527,6 +6531,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ql\Volatilities\swaptionvolcubebylinear.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ql\Volatilities\swaptionvolcubebylinear.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ql\Volatilities\swaptionvolcubebysabr.cpp"
 				>
 			</File>
@@ -7119,6 +7131,14 @@
 				</File>
 				<File
 					RelativePath=".\ql\MarketModels\BrownianGenerators\mtbrowniangenerator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ql\MarketModels\BrownianGenerators\sobolbrowniangenerator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ql\MarketModels\BrownianGenerators\sobolbrowniangenerator.hpp"
 					>
 				</File>
 			</Filter>
