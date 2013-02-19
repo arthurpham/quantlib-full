@@ -1,8 +1,10 @@
 language: cpp
 compiler:
   - gcc
-  - clang
-# Change this to your needs
+
+before_script:
+  sudo apt-get install -qq libboost-dev
+
 script: cd QuantLib && sh ./autogen.sh && ./configure && make
 
 notifications:
