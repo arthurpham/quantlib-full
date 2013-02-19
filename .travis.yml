@@ -4,3 +4,6 @@ compiler:
   - clang
 # Change this to your needs
 script: cd QuantLib && sh ./autogen.sh && ./configure && make
+
+notifications:
+  email: false
