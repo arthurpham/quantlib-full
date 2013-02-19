@@ -3,4 +3,4 @@ compiler:
   - gcc
   - clang
 # Change this to your needs
-script: cd Quantlib && sh ./autogen.sh && ./configure && make
+script: cd QuantLib && sh ./autogen.sh && ./configure && make
